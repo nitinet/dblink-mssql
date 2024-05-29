@@ -1,0 +1,21 @@
+{
+  "name": "dblink-mssql",
+  "version": "1.0.2",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dblink-core": "^1.0.1",
+    "mssql": "^10.0.2"
+  },
+  "devDependencies": {
+    "@types/mssql": "^9.1.5",
+    "@types/node": "^20.12.12"
+  }
+}
