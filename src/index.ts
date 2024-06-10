@@ -70,7 +70,8 @@ export default class MsSqlServer extends Handler {
    * @param {mssql.Request} conn
    * @returns {Promise<void>}
    */
-  async initTransaction(conn: mssql.Request): Promise<void> {
+  async initTransaction(): Promise<void> {
+    // conn: mssql.Request
     /* document why this async method 'initTransaction' is empty */
   }
 
@@ -81,7 +82,8 @@ export default class MsSqlServer extends Handler {
    * @param {mssql.Request} conn
    * @returns {Promise<void>}
    */
-  async commit(conn: mssql.Request): Promise<void> {
+  async commit(): Promise<void> {
+    // conn: mssql.Request
     /* document why this async method 'commit' is empty */
   }
 
@@ -92,7 +94,8 @@ export default class MsSqlServer extends Handler {
    * @param {mssql.Request} conn
    * @returns {Promise<void>}
    */
-  async rollback(conn: mssql.Request): Promise<void> {
+  async rollback(): Promise<void> {
+    // conn: mssql.Request
     /* document why this async method 'rollback' is empty */
   }
 
@@ -103,7 +106,8 @@ export default class MsSqlServer extends Handler {
    * @param {mssql.Request} conn
    * @returns {Promise<void>}
    */
-  async close(conn: mssql.Request): Promise<void> {
+  async close(): Promise<void> {
+    // conn: mssql.Request
     /* document why this async method 'close' is empty */
   }
 
@@ -116,11 +120,11 @@ export default class MsSqlServer extends Handler {
    * @param {?mssql.Request} [connection]
    * @returns {Promise<model.ResultSet>}
    */
-  async run(query: string, dataArgs?: any[], connection?: mssql.Request): Promise<model.ResultSet> {
-    let conn = connection ?? this.connectionPool.request();
-    let data = await conn.query(query);
+  async run(query: string, dataArgs?: unknown[], connection?: mssql.Request): Promise<model.ResultSet> {
+    const conn = connection ?? this.connectionPool.request();
+    const data = await conn.query(query);
 
-    let result = new model.ResultSet();
+    const result = new model.ResultSet();
     result.rowCount = data.rowsAffected[0] ?? 0;
     result.rows = data.recordset;
     return result;
@@ -134,7 +138,7 @@ export default class MsSqlServer extends Handler {
    * @returns {Promise<model.ResultSet>}
    */
   runStatement(queryStmt: sql.Statement | sql.Statement[], connection?: mssql.Request): Promise<model.ResultSet> {
-    let { query, dataArgs } = this.prepareQuery(queryStmt);
+    const { query, dataArgs } = this.prepareQuery(queryStmt);
     return this.run(query, dataArgs, connection);
   }
 
@@ -147,8 +151,8 @@ export default class MsSqlServer extends Handler {
    * @param {?mssql.Request} [connection]
    * @returns {Promise<Readable>}
    */
-  async stream(query: string, dataArgs?: any[], connection?: mssql.Request): Promise<Readable> {
-    let conn = connection ?? this.connectionPool.request();
+  async stream(query: string, dataArgs?: unknown[], connection?: mssql.Request): Promise<Readable> {
+    const conn = connection ?? this.connectionPool.request();
     conn.stream = true;
 
     conn.query(query);
@@ -163,7 +167,7 @@ export default class MsSqlServer extends Handler {
    * @returns {Promise<Readable>}
    */
   streamStatement(queryStmt: sql.Statement | sql.Statement[], connection?: mssql.Request): Promise<Readable> {
-    let { query, dataArgs } = this.prepareQuery(queryStmt);
+    const { query, dataArgs } = this.prepareQuery(queryStmt);
     return this.stream(query, dataArgs, connection);
   }
 }

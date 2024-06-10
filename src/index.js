@@ -25,34 +25,34 @@ export default class MsSqlServer extends Handler {
         });
         return new mssql.Request();
     }
-    async initTransaction(conn) {
+    async initTransaction() {
     }
-    async commit(conn) {
+    async commit() {
     }
-    async rollback(conn) {
+    async rollback() {
     }
-    async close(conn) {
+    async close() {
     }
     async run(query, dataArgs, connection) {
-        let conn = connection ?? this.connectionPool.request();
-        let data = await conn.query(query);
-        let result = new model.ResultSet();
+        const conn = connection ?? this.connectionPool.request();
+        const data = await conn.query(query);
+        const result = new model.ResultSet();
         result.rowCount = data.rowsAffected[0] ?? 0;
         result.rows = data.recordset;
         return result;
     }
     runStatement(queryStmt, connection) {
-        let { query, dataArgs } = this.prepareQuery(queryStmt);
+        const { query, dataArgs } = this.prepareQuery(queryStmt);
         return this.run(query, dataArgs, connection);
     }
     async stream(query, dataArgs, connection) {
-        let conn = connection ?? this.connectionPool.request();
+        const conn = connection ?? this.connectionPool.request();
         conn.stream = true;
         conn.query(query);
         return conn.toReadableStream();
     }
     streamStatement(queryStmt, connection) {
-        let { query, dataArgs } = this.prepareQuery(queryStmt);
+        const { query, dataArgs } = this.prepareQuery(queryStmt);
         return this.stream(query, dataArgs, connection);
     }
 }
