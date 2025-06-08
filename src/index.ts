@@ -22,18 +22,12 @@ export default class MsSqlServer extends Handler {
    * Creates an instance of MsSqlServer.
    *
    * @constructor
-   * @param {model.IConnectionConfig} config
+   * @param {mssql.config} config
    */
-  constructor(config: model.IConnectionConfig) {
+  constructor(config: mssql.config) {
     super(config);
 
-    this.connectionPool = new mssql.ConnectionPool({
-      server: this.config.host,
-      port: this.config.port,
-      user: this.config.username,
-      password: this.config.password,
-      database: this.config.database
-    });
+    this.connectionPool = new mssql.ConnectionPool(config);
   }
 
   /**
@@ -53,13 +47,7 @@ export default class MsSqlServer extends Handler {
    * @returns {Promise<mssql.Request>}
    */
   async getConnection(): Promise<mssql.Request> {
-    await mssql.connect({
-      server: this.config.host,
-      port: this.config.port,
-      user: this.config.username,
-      password: this.config.password,
-      database: this.config.database
-    });
+    await mssql.connect(this.config as mssql.config);
     return new mssql.Request();
   }
 
@@ -125,7 +113,6 @@ export default class MsSqlServer extends Handler {
     const data = await conn.query(query);
 
     const result = new model.ResultSet();
-    result.rowCount = data.rowsAffected[0] ?? 0;
     result.rows = data.recordset;
     return result;
   }
