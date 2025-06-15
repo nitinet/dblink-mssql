@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
+    "module": "es2022",
+    "target": "es2022",
     "moduleResolution": "Node",
-    "sourceMap": true,
+    "inlineSourceMap": true,
     "allowSyntheticDefaultImports": true,
     "removeComments": true,
     "incremental": true,
@@ -12,10 +12,6 @@
     "strict": true,
     "outDir": "./src"
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
